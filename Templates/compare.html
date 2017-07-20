@@ -1,26 +1,16 @@
 $def with (url1, url2)
 <header>Comparateur</header>
+
 <body>
-<div class="bar">
-	<div class="wrapper1">
-		<form method="post" action="sendok/?url=$url1">
-		<input type="submit" value="OK :D" />
-		</form>
-	</div>
-	<div class="wrapper2">
-		<form method="post" action="sendko/?url=$url1">
-		<input type="submit" value="KO :/" />
-		</form>
-	</div>
-</div>
+
 <style>
 form{
 	margin:auto;
 	width:25%;
 }
 body {
-  margin: 0px;
-  padding: 0px;
+	margin: 0px;
+	padding: 0px;
 }
 .bar{
 	margin: 0;
@@ -29,26 +19,21 @@ body {
 	top: 0;
 	width: 100%;
 	text-align: center;
-}
-.wrapper1{
 	background-color:green;
-	width: 50%;
-	float: left;
-}
-.wrapper2{
-	background-color:red;
-	width: 50%;
-	float: right;
-}
-.wrapper{
-	padding-top:20px;
 }
 </style>
 
-<div class="wrapper">
+<div class="bar">
+	<form method="post" action="next?url=$url1">
+	<input type="submit" value="Next"/>
+	</form>
+</div>
+
+<div class="iframes">
 	<iframe src="$url1" width="49.6%" height="10000" align="left" scrollable="no">
 	</iframe>
 	<iframe src="$url2" width="49.6%" height="10000" align="right" scrollable="no">
 	</iframe>
 </div>
+
 </body>
