@@ -26,12 +26,12 @@ class compare:
 		if len(i.url)!=0:
 			return render.compare(i.url[0], i.url[1])
 		else:
-			url = db.query('SELECT JAHYA, WORDPRESS FROM sites WHERE STATUS IS NULL LIMIT 1').list()
+			url = db.query('SELECT JAHIA, WORDPRESS FROM sites WHERE STATUS IS NULL LIMIT 1').list()
 			if not url:
 				return "No more sites to compare"
 			else:
 				temp = url[0]
-				raise web.seeother('/compare?url=' + temp.JAHYA + '&url=' + temp.WORDPRESS)
+				raise web.seeother('/compare?url=' + temp.JAHIA + '&url=' + temp.WORDPRESS)
 	def POST(self):
 		raise web.seeother('/compare')
 		
@@ -39,13 +39,13 @@ class compare:
 class sendok:
 	def POST(self):
 		i = web.input(url=None)
-		db.update('sites', where='JAHYA="' + i.url + '"', STATUS='OK')
+		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='OK')
 		raise web.seeother('/compare')
 		
 class sendko:
 	def POST(self):
 		i = web.input(url=None)
-		db.update('sites', where='JAHYA="' + i.url + '"', STATUS='KO')
+		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='KO')
 		raise web.seeother('/compare')
 
 if __name__ == "__main__": 

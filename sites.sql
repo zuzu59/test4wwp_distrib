@@ -2,7 +2,7 @@ PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 CREATE TABLE sites(
 ID SERIAL PRIMARY KEY NOT NULL,
-JAHYA TEXT,
+JAHIA TEXT,
 WORDPRESS TEXT,
 STATUS TEXT);
 INSERT INTO "sites" VALUES(0,'http://brisken-lab.epfl.ch','http://10.92.104.248:8081/test-web-wordpress.epfl.ch/v1-testwp/briskenlab.html',NULL);
