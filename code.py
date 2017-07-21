@@ -15,6 +15,8 @@ db = web.database(dbn='sqlite', db='python.db')
 button = form.Form(
     form.Button("submit", type="submit", description="Next"),
 )
+#Changer la valeur en secondes pendant laquelle un page va etre consideree comme en traitement
+grace_period = 3600
 
 class index:
     def GET(self):
@@ -26,7 +28,7 @@ class compare:
 		if len(i.url)==2:
 			return render.compare(i.url[0], i.url[1])
 		else:
-			db.update('sites', where='STATUS="BUSY" AND DATE<' + str(time.time()-3600), STATUS=None, DATE=None)
+			db.update('sites', where='STATUS="BUSY" AND DATE<' + str(time.time()-grace_period), STATUS=None, DATE=None)
 			url = db.query('SELECT JAHIA, WORDPRESS FROM sites WHERE STATUS IS NULL LIMIT 1').list()
 			if not url:
 				return "No more sites to compare"
