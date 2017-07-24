@@ -36,6 +36,21 @@ body {
 }
 </style>
 
+<script>
+ window.addEventListener("message", receiveMessage, false);
+ function receiveMessage(event)
+ {
+     frame1_window = document.getElementById('frame1').contentWindow;
+     frame2_window = document.getElementById('frame2').contentWindow;
+
+     if (event.source === frame1_window) {
+         frame2_window.postMessage(event.data, "*");
+     } else {
+         frame1_window.postMessage(event.data, "*");
+     }
+ }
+</script>
+
 <div class="bar">
 	<div class="wrapper1">
 		<form method="post" action="next?url=$url1">
@@ -49,10 +64,8 @@ body {
 	</div>
 </div>
 <div class="iframes">
-	<iframe src="$url1" width="49.6%" height="10000" align="left" scrollable="no">
-	</iframe>
-	<iframe src="$url2" width="49.6%" height="10000" align="right" scrollable="no">
-	</iframe>
+	<iframe id="iframe1" src="$url1" width="49.6%" height="10000" align="left" scrollable="no"></iframe>
+	<iframe id="iframe2" src="$url2" width="49.6%" height="10000" align="right" scrollable="no"></iframe>
 </div>
 
 </body>
