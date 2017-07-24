@@ -14,13 +14,22 @@ body {
 	margin: 0px;
 	padding: 0px;
 }
+.wrapper1{
+	background-color:green;
+	width: 50%;
+	float: left;
+}
+.wrapper2{
+	background-color:red;
+	width: 50%;
+	float: right;
+}
 .bar{
 	margin: 0;
   	padding: 0;
 	top: 0;
 	width: 100%;
 	text-align: center;
-	background-color:green;
 }
 .iframes{
 	padding:10px;
@@ -28,11 +37,17 @@ body {
 </style>
 
 <div class="bar">
-	<form method="post" action="next?url=$url1">
-	<input type="submit" value="Next"/>
-	</form>
+	<div class="wrapper1">
+		<form method="post" action="next?url=$url1">
+		<input type="submit" value="Finished testing" />
+		</form>
+	</div>
+	<div class="wrapper2">
+		<form method="post" action="sendko?url=$url1">
+		<input type="submit" value="Error" />
+		</form>
+	</div>
 </div>
-
 <div class="iframes">
 	<iframe src="$url1" width="49.6%" height="10000" align="left" scrollable="no">
 	</iframe>

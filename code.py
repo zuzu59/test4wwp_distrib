@@ -7,7 +7,8 @@ render = web.template.render('Templates/')
 urls = (
 	'/', 'index',
 	'/compare', 'compare',
-	'/next', 'next'
+	'/next', 'next',
+	'/sendko', 'sendko'
 )
 
 db = web.database(dbn='sqlite', db='python.db')
@@ -35,7 +36,7 @@ class compare:
 			else:
 				temp = url[0]
 				
-				if (db.query('SELECT STATUS FROM sites WHERE JAHIA="' + temp.JAHIA + '"')!='DONE'):
+				if (db.query('SELECT STATUS FROM sites WHERE JAHIA="' + temp.JAHIA + '"')!='TESTED'):
 					db.update('sites', where='JAHIA="' + temp.JAHIA + '"', STATUS='BUSY', DATE=time.time())
 				raise web.seeother('/compare?url=' + temp.JAHIA + '&url=' + temp.WORDPRESS)
 	def POST(self):
@@ -45,7 +46,13 @@ class compare:
 class next:
 	def POST(self):
 		i = web.input(url=None)
-		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='DONE')
+		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='TESTED')
+		raise web.seeother('/compare')
+		
+class sendko:
+	def POST(self):
+		i = web.input(url=None)
+		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='ERROR')
 		raise web.seeother('/compare')
 		
 if __name__ == "__main__": 
