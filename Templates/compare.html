@@ -63,9 +63,23 @@ body {
 		</form>
 	</div>
 </div>
-<div class="iframes">
-	<iframe id="iframe1" src="$url1" width="49.6%" height="10000" align="left" scrollable="no"></iframe>
-	<iframe id="iframe2" src="$url2" width="49.6%" height="10000" align="right" scrollable="no"></iframe>
-</div>
+<body>
+   <center>
+     <iframe id="frame1" src="https://epfl.ch/" width="750" height="1000" scrolling="yes" style="display:inline"></iframe>
+     <iframe id="frame2" src="https://epfl.ch/" width="750" height="1000" scrolling="yes" style="display:inline"></iframe>
+   </center>
+   <script>
+     window.addEventListener("message", receiveMessage, false);
+     function receiveMessage(event)
+     {
+         frame1_window = document.getElementById('frame1').contentWindow;
+         frame2_window = document.getElementById('frame2').contentWindow;
 
-</body>
+         if (event.source === frame1_window) {
+             frame2_window.postMessage(event.data, "*");
+         } else {
+             frame1_window.postMessage(event.data, "*");
+         }
+     }
+   </script>
+   </body>
