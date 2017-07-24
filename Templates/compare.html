@@ -32,7 +32,7 @@ body {
 	text-align: center;
 }
 .iframes{
-	padding:10px;
+	padding:0px;
 }
 </style>
 
@@ -65,9 +65,11 @@ body {
 </div>
 <body>
    <center>
-     <iframe id="frame1" src="https://epfl.ch/" width="750" height="1000" scrolling="yes" style="display:inline"></iframe>
-     <iframe id="frame2" src="https://epfl.ch/" width="750" height="1000" scrolling="yes" style="display:inline"></iframe>
-   </center>
+	<div id="iframes">
+     <iframe id="frame1" src="$url1" width="49%" height="90%" scrolling="yes" style="display:inline"></iframe>
+     <iframe id="frame2" src="$url2" width="49%" height="90%" scrolling="yes" style="display:inline"></iframe>
+	</div>   
+</center>
    <script>
      window.addEventListener("message", receiveMessage, false);
      function receiveMessage(event)
