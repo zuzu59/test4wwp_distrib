@@ -1,9 +1,6 @@
 $def with (url1, url2)
-<header>
-<title>Comparateur de pages</title>
-</header>
-<head></head>
-<body>
+<head>
+<title> Comparateur de pages</title>
 
 <style>
 form{
@@ -50,7 +47,9 @@ body {
      }
  }
 </script>
+</head>
 
+<body>
 <div class="bar">
 	<div class="wrapper1">
 		<form method="post" action="next?url=$url1">
@@ -63,25 +62,11 @@ body {
 		</form>
 	</div>
 </div>
-<body>
-   <center>
+
+<center>
 	<div id="iframes">
-     <iframe id="frame1" src="$url1" width="49%" height="90%" scrolling="yes" style="display:inline"></iframe>
-     <iframe id="frame2" src="$url2" width="49%" height="90%" scrolling="yes" style="display:inline"></iframe>
+     		<iframe id="frame1" src="$url1" width="49.5%" height="95%" scrolling="yes" style="display:inline"></iframe>
+     		<iframe id="frame2" src="$url2" width="49.5%" height="95%" scrolling="yes" style="display:inline"></iframe>
 	</div>   
 </center>
-   <script>
-     window.addEventListener("message", receiveMessage, false);
-     function receiveMessage(event)
-     {
-         frame1_window = document.getElementById('frame1').contentWindow;
-         frame2_window = document.getElementById('frame2').contentWindow;
-
-         if (event.source === frame1_window) {
-             frame2_window.postMessage(event.data, "*");
-         } else {
-             frame1_window.postMessage(event.data, "*");
-         }
-     }
-   </script>
-   </body>
+</body>
