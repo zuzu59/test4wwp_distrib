@@ -2,7 +2,7 @@ import os
 import errno
 import csv
 try:
-    origin = open('credentials.csv')
+    origin = open('../credentials/credentials.csv')
     output = open('sites.sql', 'w')
     reader = csv.reader(origin)
     i=0

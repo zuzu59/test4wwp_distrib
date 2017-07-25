@@ -100,4 +100,8 @@ ENV/
 # mypy
 .mypy_cache/
 
-credentials.csv
+python.db
+sites.sql
+
+
+
