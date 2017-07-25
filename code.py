@@ -33,12 +33,12 @@ class compare:
 			#Verification de la date d'expiration de seances 'en cours'
 			db.update('sites', where='STATUS="BUSY" AND DATE<' + str(time.time()-grace_period), STATUS=None, DATE=None)
 			
-			url = db.query('SELECT JAHIA, WORDPRESS FROM sites WHERE STATUS IS NULL').list()
-			if not url:
+			urls = db.query('SELECT JAHIA, WORDPRESS FROM sites WHERE STATUS IS NULL').list()
+			if not urls:
 				return "No more sites to compare"
 			else:
-				rdm_id = randint(0, len(url))
-				temp = url[rdm_id]
+				rdm_id = randint(0, len(urls))
+				temp = urls[rdm_id]
 				
 				if (db.query('SELECT STATUS FROM sites WHERE JAHIA="' + temp.JAHIA + '"')!='TESTED'):
 					db.update('sites', where='JAHIA="' + temp.JAHIA + '"', STATUS='BUSY', DATE=time.time())
@@ -50,13 +50,13 @@ class compare:
 class next:
 	def POST(self):
 		i = web.input(url=None)
-		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='TESTED')
+		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='TESTED', DATE=time.time())
 		raise web.seeother('/compare')
 		
 class sendko:
 	def POST(self):
 		i = web.input(url=None)
-		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='ERROR')
+		db.update('sites', where='JAHIA="' + i.url + '"', STATUS='ERROR', DATE=time.time())
 		raise web.seeother('/compare')
 		
 if __name__ == "__main__": 
