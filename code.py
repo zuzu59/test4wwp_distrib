@@ -1,6 +1,7 @@
 import web
 from web import form
 import time
+from random import randint
 
 render = web.template.render('Templates/')
 
@@ -29,12 +30,15 @@ class compare:
 		if len(i.url)==2:
 			return render.compare(i.url[0], i.url[1])
 		else:
+			#Verification de la date d'expiration de seances 'en cours'
 			db.update('sites', where='STATUS="BUSY" AND DATE<' + str(time.time()-grace_period), STATUS=None, DATE=None)
-			url = db.query('SELECT JAHIA, WORDPRESS FROM sites WHERE STATUS IS NULL LIMIT 1').list()
+			
+			url = db.query('SELECT JAHIA, WORDPRESS FROM sites WHERE STATUS IS NULL').list()
 			if not url:
 				return "No more sites to compare"
 			else:
-				temp = url[0]
+				rdm_id = randint(0, len(url))
+				temp = url[rdm_id]
 				
 				if (db.query('SELECT STATUS FROM sites WHERE JAHIA="' + temp.JAHIA + '"')!='TESTED'):
 					db.update('sites', where='JAHIA="' + temp.JAHIA + '"', STATUS='BUSY', DATE=time.time())
