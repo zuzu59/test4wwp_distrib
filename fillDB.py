@@ -18,7 +18,7 @@ try:
     # Insert users
     users = open('users.csv')
     reader = csv.reader(users)
-    output.write("CREATE TABLE users (ID SERIAL PRIMARY KEY NOT NULL, TEXT NAME);")
+    output.write("CREATE TABLE users (ID SERIAL PRIMARY KEY NOT NULL, NAME TEXT);")
     i = 0
     for row in reader:
         output.write('INSERT INTO "users" VALUES(' + str(i) + ',"' + row[1] +'");')  
