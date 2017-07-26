@@ -9,7 +9,8 @@ urls = (
 	'/', 'index',
 	'/compare', 'compare',
 	'/next', 'next',
-	'/sendko', 'sendko'
+	'/connectionError', 'connectionError',
+	'/emptyPage', 'emptyPage'
 )
 
 
@@ -38,7 +39,7 @@ class compare:
 		if not urls:
                 	return "No more sites to compare"
 
-            rdm_id = randint(0, len(urls))
+            rdm_id = randint(0, len(urls)-1)
             temp = urls[rdm_id]
             if (db.query('SELECT STATUS FROM sites WHERE JAHIA="' + temp.JAHIA + '"')!='DONE'):
             	db.update('sites', where='JAHIA="' + temp.JAHIA + '"', STATUS='BUSY', USER=name, DATE=time.time())
