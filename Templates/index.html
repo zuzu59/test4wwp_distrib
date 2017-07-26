@@ -1,3 +1,4 @@
+$def with (users)
 <head>
 <title>Comparateur de pages</title>
 <style>
@@ -14,7 +15,12 @@
 
 <div class="wrapper">
 	<form method="get" action="compare">
-		<p><input type="submit" value="Start!" /></p>
+        <select name="select" >
+            <option value="empty">Choisissez votre nom </option>
+            $for user in users:
+                <option value="$user.NAME">$user.NAME</option>
+        </select>
+		<input type="submit" value="Start!" />
 	</form>
 </div>
 
