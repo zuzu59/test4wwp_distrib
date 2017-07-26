@@ -16,9 +16,9 @@ $def with (users)
 <div class="wrapper">
 	<form method="post" action="compare">
         <select name="select">
-            <option value="empty">Choisissez votre nom </option>
+            <option value="0">Choisissez votre nom </option>
             $for user in users:
-                <option value="$user.NAME">$user.NAME</option>
+                <option value="$user.ID">$user.ID - $user.NAME</option>
         </select>
 		<input type="submit" value="Commençons ! ;-)" />
 	</form>
