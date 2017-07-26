@@ -28,11 +28,10 @@ class index:
 
 class compare:
     def GET(self):
-        s = web.input(select=[])
-        print(s)
-        i = web.input(url=[])
-        if len(i.url)==2:
-            return render.compare(i.url[0], i.url[1])
+        urls = web.input(url=[]).url
+        name = web.input(name = '').name
+        if len(urls)==2:
+            return render.compare(name, urls[0], urls[1])
         else:
             #Verification de la date d'expiration de seances 'en cours'
             db.update('sites', where='STATUS="BUSY" AND DATE<' + str(time.time()-grace_period), STATUS=None, DATE=None)
@@ -43,24 +42,41 @@ class compare:
             else:
                 rdm_id = randint(0, len(urls))
                 temp = urls[rdm_id]
-	
-                if (db.query('SELECT STATUS FROM sites WHERE JAHIA="' + temp.JAHIA + '"')!='TESTED'):
+                if (db.query('SELECT STATUS FROM sites WHERE JAHIA="' + temp.JAHIA + '"')!='DONE'):
                     db.update('sites', where='JAHIA="' + temp.JAHIA + '"', STATUS='BUSY', DATE=time.time())
-                raise web.seeother('/compare?url=' + temp.JAHIA + '&url=' + temp.WORDPRESS)
+                raise web.seeother('/compare?name=' + name + '&url=' + temp.JAHIA + '&url=' + temp.WORDPRESS)
+
     def POST(self):
-        raise web.seeother('/compare')
+        name = web.input(select=None).select
+        if name != "empty":
+            raise web.seeother('/compare?name=' + name)
+        else:
+            raise web.seeother('/')
+
+
 
 class next:
     def POST(self):
-        i = web.input(url=None)
-        db.update('sites', where='JAHIA="' + i.url + '"', STATUS='TESTED', DATE=time.time())    
-        raise web.seeother('/compare')
-		
-class sendko:
+        update_status('DONE')
+
+class emptyPage:
     def POST(self):
-        i = web.input(url=None)
-        db.update('sites', where='JAHIA="' + i.url + '"', STATUS='ERROR', DATE=time.time())
-        raise web.seeother('/compare')
+        update_status('EMPTY')
+        
+class connectionError:
+    def POST(self):
+        update_status('ERROR')
+ 
+
+def update_status(status):
+    url = web.input(url=None).url
+    name = web.input(name = '').name
+    if name:
+        db.update('sites', where='JAHIA="' + url + '"', STATUS=status, DATE=time.time())    
+        raise web.seeother('/compare?name=' + name)
+    else:
+        raise web.seeother('/')
+
 		
 if __name__ == "__main__":  
     app = web.application(urls, globals())  

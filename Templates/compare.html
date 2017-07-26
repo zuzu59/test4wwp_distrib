@@ -1,9 +1,11 @@
-$def with (url1, url2)
+$def with (name, url1, url2)
 <head>
 <title> Comparateur de pages</title>
 
 <style>
-form{
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+
+form {
 	margin:auto;
 	width:25%;
 }
@@ -11,28 +13,58 @@ body {
 	margin: 0px;
 	padding: 0px;
 }
-.wrapper1{
+
+input {
+    font-style: italic;
+}
+
+.wrapper {
+	width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#wrapper1 {
 	background-color:green;
-	width: 50%;
-	float: left;
 }
-.wrapper2{
+
+#wrapper2 {
 	background-color:red;
-	width: 50%;
-	float: right;
+
 }
-.bar{
+
+#div-name {
+    margin: 0px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-family: 'Indie Flower', cursive;
+    font-size: 17px;
+    font-weight: bold;
+    border-style: solid;
+    border-width: 2px;
+    border-color: purple; 
+    background-color: pink;
+    color: red;
+}
+
+.inside-wrapper {
+    width: 50%;
+    margin: auto;
+}
+
+.bar {
 	margin: 0;
   	padding: 0;
 	top: 0;
 	width: 100%;
 	text-align: center;
+    display: flex;
+    justify-content: space-between;
 }
-.iframes{
+.iframes {
 	padding:0px;
 }
 </style>
-
 <script>
  window.addEventListener("message", receiveMessage, false);
  function receiveMessage(event)
@@ -51,15 +83,27 @@ body {
 
 <body>
 <div class="bar">
-	<div class="wrapper1">
-		<form method="post" action="next?url=$url1">
-		<input type="submit" value="Finished testing" />
-		</form>
+	<div class="wrapper" id="wrapper1">
+        <div class="inside-wrapper">
+		    <form method="post" action="next?name=$name&url=$url1">
+		        <input type="submit" value="Page testée" />
+		    </form>
+        </div>
 	</div>
-	<div class="wrapper2">
-		<form method="post" action="sendko?url=$url1">
-		<input type="submit" value="Error" />
-		</form>
+    <div id="div-name">
+        $name
+    </div>
+	<div class="wrapper" id="wrapper2">
+        <div class="inside-wrapper">
+		    <form method="post" action="emptyPage?name=$name&url=$url1">
+		        <input type="submit" value="Page vide" />
+		    </form>
+        </div>
+        <div class="inside-wrapper">
+            <form method="post" action="connectionError?name=$name&url=$url1">
+		        <input type="submit" value="Connexion impossible" />
+		    </form>
+        </div>
 	</div>
 </div>
 

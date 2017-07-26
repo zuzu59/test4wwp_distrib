@@ -14,13 +14,13 @@ $def with (users)
 <body>
 
 <div class="wrapper">
-	<form method="get" action="compare">
-        <select name="select" >
+	<form method="post" action="compare">
+        <select name="select">
             <option value="empty">Choisissez votre nom </option>
             $for user in users:
                 <option value="$user.NAME">$user.NAME</option>
         </select>
-		<input type="submit" value="Start!" />
+		<input type="submit" value="Commençons ! ;-)" />
 	</form>
 </div>
 
