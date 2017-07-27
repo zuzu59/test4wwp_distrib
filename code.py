@@ -7,6 +7,7 @@ render = web.template.render('Templates/')
 
 urls = (
 	'/', 'index',
+	'/sites', 'sites',
 	'/compare', 'compare',
 	'/next', 'next',
 	'/connectionError', 'connectionError',
@@ -24,7 +25,10 @@ button = form.Form(
 class index:
     def GET(self):
         return render.index(names)
-
+class sites:
+	def GET(self):
+		sites = db.query("SELECT * FROM sites;").list()
+		return render.sites(sites)
 class compare:
     def GET(self):
         urls = web.input(url=[]).url
