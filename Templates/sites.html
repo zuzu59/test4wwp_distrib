@@ -1,19 +1,22 @@
-$def with (sites)
+$def with (sites, users)
 
 <head>
 <title>Liste des sites</title>
 
 <style>
 table {
-	font-family: arial, sans-serif;
+	font-family: helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: 100vw;
 }
+
+
 th, tr {
 	border: 1px solid #dddddd;
 	position: relative;
     text-align: left;
     padding: 8px;
+	overflow:auto;
 }
 td {
 	border-right: 1px solid #dddddd;
@@ -23,24 +26,40 @@ tr:nth-child(odd) {
 	background:#eeeeee;
 }
 tbody {
-	padding-top:55px;
 	overflow:auto;
 }
 
-
 </style>
 </head>
-
 <body>
-<table>
-	<thead>	
-	<tr><th>JAHIA</th> <th>WORDPRESS</th> <th>STATUS</th> <th>USER</th> <th>DATE</th></tr>
-	</thead>
-	<tbody>
-	$for site in sites:
-		<tr><td><a href="$site.JAHIA">$site.JAHIA</a></td> 
-		<td><a href="$site.WORDPRESS">$site.WORDPRESS </a></td>
-		<td>$site.STATUS</td> <td>$site.USER</td> <td>$site.DATE</td></tr>
-	</tbody>
-</table>
+    <div id="table-wrapper">
+        <table>
+        	<thead>	
+        	    <tr>
+                    <th>JAHIA</th> 
+                    <th>WORDPRESS</th> 
+                    <th>STATUS</th> 
+                    <th>USER</th> 
+                    <th>DATE</th>
+                </tr>
+        	</thead>
+        	<tbody>
+        	$for site in sites:
+        		<tr>
+                    <td><a href="$site.JAHIA">$site.JAHIA</a></td> 
+        		    <td><a href="$site.WORDPRESS">$site.WORDPRESS </a></td>
+        		    <td>$site.STATUS</td> 
+                    <td> 
+                        <select>
+                            <option value="$site.USER_ID">$site.USER_ID -  $(users[int(site.USER_ID)-1].NAME if site.USER_ID else "")</option>
+                            $for user in users:
+                                $if user.ID != site.USER_ID:
+                                    <option value="$user.ID">$user.ID - $user.NAME</option>
+                        </select>
+                    </td>
+                    <td>$site.DATE</td>
+                </tr>
+        	</tbody>
+        </table>
+    </div>
 </body>

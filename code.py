@@ -25,10 +25,12 @@ button = form.Form(
 class index:
     def GET(self):
         return render.index(names)
+
 class sites:
 	def GET(self):
 		sites = db.query("SELECT * FROM sites;").list()
-		return render.sites(sites)
+		return render.sites(sites, names)
+
 class compare:
     def GET(self):
         urls = web.input(url=[]).url
