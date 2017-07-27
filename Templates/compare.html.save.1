@@ -1,0 +1,73 @@
+$def with (url1, url2)
+<head>
+<title> Comparateur de pages</title>
+
+<style>
+form{
+	margin:auto;
+	width:25%;
+}
+body {
+	margin: 0px;
+	padding: 0px;
+}
+.wrapper1{
+	background-color:green;
+	width: 50%;
+	float: left;
+}
+.wrapper2{
+	background-color:red;
+	width: 50%;
+	float: right;
+}
+.bar{
+	margin: 0;
+  	padding: 0;
+	top: 0;
+	width: 100%;
+	text-align: center;
+}
+#iframes{
+	padding:0px;
+	height:90vh;
+}
+</style>
+
+<script>
+ window.addEventListener("message", receiveMessage, false);
+ function receiveMessage(event)
+ {
+     frame1_window = document.getElementById('frame1').contentWindow;
+     frame2_window = document.getElementById('frame2').contentWindow;
+
+     if (event.source === frame1_window) {
+         frame2_window.postMessage(event.data, "*");
+     } else {
+         frame1_window.postMessage(event.data, "*");
+     }
+ }
+</script>
+</head>
+
+<body>
+<div class="bar">
+	<div class="wrapper1">
+		<form method="post" action="next?url=$url1">
+		<input type="submit" value="Finished testing" />
+		</form>
+	</div>
+	<div class="wrapper2">
+		<form method="post" action="sendko?url=$url1">
+		<input type="submit" value="Error" />
+		</form>
+	</div>
+</div>
+
+<center>
+	<div id="iframes">
+     		<iframe id="frame1" src="$url1" height="100%" width="49.5%" scrolling="yes" style="display:inline"></iframe>
+     		<iframe id="frame2" src="$url2" height="100%" width="49.5%" scrolling="yes" style="display:inline"></iframe>
+	</div>   
+</center>
+</body>

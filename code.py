@@ -2,6 +2,7 @@ import web
 from web import form
 import time
 from random import randint
+import datetime
 
 render = web.template.render('Templates/')
 
@@ -30,6 +31,9 @@ class index:
 class sites:
 	def GET(self):
 		sites = db.query("SELECT * FROM sites;").list()
+		for site in sites:
+			if site.DATE:
+				site.DATE =datetime.datetime.fromtimestamp(int(site.DATE)).strftime('%Y-%m-%d %H:%M:%S')	
 		return render.sites(sites, names, status)
 
 class compare:
