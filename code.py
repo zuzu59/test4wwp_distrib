@@ -39,9 +39,10 @@ class sites:
 class compare:
     def GET(self):
         urls = web.input(url=[]).url
-        user_id = web.input(user_id = 0).user_id
-        if (int(user_id) <= 0) or (int(user_id) > len(names)):
-            raise web.seeother('/')
+        user_id = web.input(user_id = None).user_id
+        if user_id:
+            if (int(user_id) <= 0) or (int(user_id) > len(names)):
+                raise web.seeother('/')
         if len(urls)==2:
             return render.compare(user_id, urls[0], urls[1])
         else:

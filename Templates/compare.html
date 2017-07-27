@@ -1,5 +1,6 @@
 $def with (user_id, url1, url2)
 <head>
+<meta charset="UTF-8">
 <title> Comparateur de pages</title>
 
 <style>
@@ -82,30 +83,31 @@ input {
 </head>
 
 <body>
-<div class="bar">
-	<div class="wrapper" id="wrapper1">
-        <div class="inside-wrapper">
-		    <form method="post" action="next?user_id=$user_id&url=$url1">
-		        <input type="submit" value="Page testée" />
-		    </form>
+$if user_id:
+    <div class="bar">
+    	<div class="wrapper" id="wrapper1">
+            <div class="inside-wrapper">
+    		    <form method="post" action="next?user_id=$user_id&url=$url1">
+    		        <input type="submit" value="Page testée" />
+    		    </form>
+            </div>
+    	</div>
+        <div id="div-name">
+            $user_id
         </div>
-	</div>
-    <div id="div-name">
-        $user_id
+    	<div class="wrapper" id="wrapper2">
+            <div class="inside-wrapper">
+    		    <form method="post" action="emptyPage?user_id=$user_id&url=$url1">
+    		        <input type="submit" value="Page vide" />
+    		    </form>
+            </div>
+            <div class="inside-wrapper">
+                <form method="post" action="connectionError?user_id=$user_id&url=$url1">
+    		        <input type="submit" value="Connexion impossible" />
+    		    </form>
+            </div>
+    	</div>
     </div>
-	<div class="wrapper" id="wrapper2">
-        <div class="inside-wrapper">
-		    <form method="post" action="emptyPage?user_id=$user_id&url=$url1">
-		        <input type="submit" value="Page vide" />
-		    </form>
-        </div>
-        <div class="inside-wrapper">
-            <form method="post" action="connectionError?user_id=$user_id&url=$url1">
-		        <input type="submit" value="Connexion impossible" />
-		    </form>
-        </div>
-	</div>
-</div>
 
 <center>
 	<div id="iframes">
