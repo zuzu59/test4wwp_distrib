@@ -17,6 +17,7 @@ urls = (
 
 db = web.database(dbn='sqlite', db='python.db')
 names = db.query('SELECT ID, NAME FROM users').list()
+status = ['DONE', 'BUSY', 'EMPTY', None]
 
 button = form.Form(
     form.Button("submit", type="submit", description="Next"),
@@ -29,7 +30,7 @@ class index:
 class sites:
 	def GET(self):
 		sites = db.query("SELECT * FROM sites;").list()
-		return render.sites(sites, names)
+		return render.sites(sites, names, status)
 
 class compare:
     def GET(self):

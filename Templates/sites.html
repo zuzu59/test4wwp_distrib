@@ -1,4 +1,4 @@
-$def with (sites, users)
+$def with (sites, users, status)
 
 <head>
 <title>Liste des sites</title>
@@ -48,7 +48,15 @@ tbody {
         		<tr>
                     <td><a href="$site.JAHIA">$site.JAHIA</a></td> 
         		    <td><a href="$site.WORDPRESS">$site.WORDPRESS </a></td>
-        		    <td>$site.STATUS</td> 
+                    <td> 
+                        <select>
+                            <option value="$site.STATUS">$(site.STATUS if site.STATUS else "")</option>
+                            $for statu in status:
+                                $if statu != site.STATUS :
+                                    <option value="$statu">$(statu if statu else "")</option>
+                        </select>
+                    </td>
+
                     <td> 
                         <select>
                             <option value="$site.USER_ID">$site.USER_ID -  $(users[int(site.USER_ID)-1].NAME if site.USER_ID else "")</option>
