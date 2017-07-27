@@ -38,13 +38,14 @@ class sites:
 
 class compare:
     def GET(self):
-        urls = web.input(url=[]).url
+        url1 = web.input(url1=None).url1
+        url2 = web.input(url2=None).url2
         user_id = web.input(user_id = None).user_id
         if user_id:
             if (int(user_id) <= 0) or (int(user_id) > len(names)):
                 raise web.seeother('/')
-        if len(urls)==2:
-            return render.compare(user_id, urls[0], urls[1])
+        if url1 and url2:
+            return render.compare(user_id, url1, url2)
         else:
             urls = db.query('SELECT JAHIA, WORDPRESS FROM sites WHERE STATUS="BUSY" AND USER_ID="' + user_id + '";').list()
      	    if not urls:
@@ -55,7 +56,7 @@ class compare:
         temp = urls[rdm_id]
         if (db.query('SELECT STATUS FROM sites WHERE JAHIA="' + temp.JAHIA + '"')!='DONE'):
             db.update('sites', where='JAHIA="' + temp.JAHIA + '"', STATUS='BUSY', USER_ID=user_id, DATE=time.time())
-        raise web.seeother('/compare?user_id=' + user_id + '&url=' + temp.JAHIA + '&url=' + temp.WORDPRESS)
+        raise web.seeother('/compare?user_id=' + user_id + '&url1=' + temp.JAHIA + '&url2=' + temp.WORDPRESS)
 
     def POST(self):
         user_id = web.input(select=None).select
