@@ -39,26 +39,39 @@ $def with (users)
     text-align: center;
     font-family: "Convergence", sans-serif;
 }
+#footer {
+    position: absolute;
+    bottom: 20px;
+    padding-left: 20px;
+    font-family: helvetica;
+}
 </style>
 </head>
 
 <body>
-<div class="wrapper">
-    <div id="title-wrapper">
-        <h1 id="title">
-            Comparateur de sites web
-        </h1>
+    <div class="wrapper">
+        <div id="title-wrapper">
+            <h1 id="title">
+                Comparateur de sites web
+            </h1>
+        </div>
+        
+        <div class="wrapper-select">
+        	<form method="post" action="compare">
+                <select name="select" class="button"> 
+                    <option value="0">Choisissez votre nom </option>
+                    $for user in users:
+                        <option value="$user.ID">$user.ID - $user.NAME</option>
+                </select>
+        		<input class="button" type="submit" value="Commençons ! ;-)" />
+        	</form>
+        </div>
     </div>
-    
-    <div class="wrapper-select">
-    	<form method="post" action="compare">
-            <select name="select" class="button"> 
-                <option value="0">Choisissez votre nom </option>
-                $for user in users:
-                    <option value="$user.ID">$user.ID - $user.NAME</option>
-            </select>
-    		<input class="button" type="submit" value="Commençons ! ;-)" />
-    	</form>
+    <div id="footer">
+        <tr>
+            <td height=30>Accès aux databases : </td>
+            <td height=30><a href="/sitesDB">avancées sites webs</a></td>
+        </tr>
     </div>
-</div>
-<body>
+</body>
+
