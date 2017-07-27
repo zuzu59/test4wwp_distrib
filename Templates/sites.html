@@ -4,17 +4,43 @@ $def with (sites)
 <title>Liste des sites</title>
 
 <style>
-tr {
-	background:green;
+table {
+	font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+th, tr {
+	border: 1px solid #dddddd;
+	position: relative;
+    text-align: left;
+    padding: 8px;
+}
+td {
+	border-right: 1px solid #dddddd;
+	border-left: 1px solid #dddddd;
 }
 tr:nth-child(odd) {
-	background:red;
+	background:#eeeeee;
 }
+tbody {
+	padding-top:55px;
+	overflow:auto;
+}
+
 
 </style>
 </head>
 
-<body>	
+<body>
+<table>
+	<thead>	
+	<tr><th>JAHIA</th> <th>WORDPRESS</th> <th>STATUS</th> <th>USER</th> <th>DATE</th></tr>
+	</thead>
+	<tbody>
 	$for site in sites:
-		<tr><td>$site.JAHIA</td> <td>$site.WORDPRESS</td></tr>
+		<tr><td><a href="$site.JAHIA">$site.JAHIA</a></td> 
+		<td><a href="$site.WORDPRESS">$site.WORDPRESS </a></td>
+		<td>$site.STATUS</td> <td>$site.USER</td> <td>$site.DATE</td></tr>
+	</tbody>
+</table>
 </body>
