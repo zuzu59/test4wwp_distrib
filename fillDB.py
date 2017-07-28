@@ -14,9 +14,10 @@ try:
     	output.write('INSERT INTO "sites" VALUES(' + str(i) + ', "'+ row[2] + '", "' + row[3]+ '", NULL, NULL, NULL);\n')
         i+=1
     credentials.close()
+    print('Credentials OK')
 
     # Insert users
-    users = open('users.csv')
+    users = open('../credentials/users.csv')
     reader = csv.reader(users)
     output.write("CREATE TABLE users (ID SERIAL PRIMARY KEY NOT NULL, NAME TEXT);")
     i = 0
@@ -27,5 +28,6 @@ try:
             i += 1
     output.write("COMMIT;")
     output.close()
+    print('Users OK')
 except IOError as ioex:
-    print ('No credentials')
+    print ('Error while reading credentials.csv or users.csv')
