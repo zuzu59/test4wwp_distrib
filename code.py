@@ -10,15 +10,13 @@ urls = (
 	'/', 'index',
 	'/sites', 'sites',
 	'/compare', 'compare',
-	'/next', 'next',
-	'/connectionError', 'connectionError',
-	'/emptyPage', 'emptyPage'
+	'/next', 'next'
 )
 
 
 db = web.database(dbn='sqlite', db='python.db')
 names = db.query('SELECT ID, NAME FROM users').list()
-status = ['DONE', 'BUSY', 'EMPTY', None]
+status = ['DONE', 'BUSY', 'EMPTY', 'CONNECTION ERROR', None]
 
 button = form.Form(
     form.Button("submit", type="submit", description="Next"),
@@ -45,7 +43,7 @@ class compare:
             if (int(user_id) <= 0) or (int(user_id) > len(names)):
                 raise web.seeother('/')
         if url1 and url2:
-            return render.compare(user_id, url1, url2)
+            return render.compare(names, user_id, status, url1, url2)
         else:
             urls = db.query('SELECT JAHIA, WORDPRESS FROM sites WHERE STATUS="BUSY" AND USER_ID="' + user_id + '";').list()
      	    if not urls:
@@ -69,19 +67,22 @@ class compare:
 
 class next:
     def POST(self):
-        update_status('DONE')
-
-class emptyPage:
-    def POST(self):
-        update_status('EMPTY')
-
-class connectionError:
-    def POST(self):
-        update_status('ERROR')
-
+        statu = web.input(select = None).select
+        print(statu)
+        if statu:
+            update_status(statu)
+        else:
+            url1 = web.input(url1=None).url1
+            url2 = web.input(url2=None).url2
+            user_id = web.input(user_id = None).user_id
+            if user_id:
+                if (int(user_id) <= 0) or (int(user_id) > len(names)):
+                    raise web.seeother('/')
+            if url1 and url2:
+                return render.compare(names, user_id, status, url1, url2)
 
 def update_status(status):
-    url = web.input(url=None).url
+    url = web.input(url1=None).url1
     user_id = web.input(user_id=0).user_id
     if user_id != '0':
         db.update('sites', where='JAHIA="' + url + '"', STATUS=status, DATE=time.time())

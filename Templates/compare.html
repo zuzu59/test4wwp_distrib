@@ -1,15 +1,13 @@
-$def with (user_id, url1, url2)
+$def with (names, user_id, status, url1, url2)
 <head>
 <meta charset="UTF-8">
 <title> Comparateur de pages</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
 
 form {
 	margin:auto;
-	width:25%;
-}
+	width:100%; }
 body {
 	margin: 0px;
 	padding: 0px;
@@ -22,25 +20,26 @@ input {
 .wrapper {
 	width: 50%;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
 }
 
 #wrapper1 {
-	background-color:green;
+	background-color:#eeeeee;
 }
 
 #wrapper2 {
-	background-color:red;
+	background-color:#eeeeee;
 
 }
 
 #div-name {
-    margin: 0px;
+	width: 25vw;
+    margin: auto;
     padding-right: 10px;
     padding-left: 10px;
-    font-family: 'Indie Flower', cursive;
+    font-family: Helvetica;
     font-size: 17px;
-    font-weight: bold;
     border-style: solid;
     border-width: 2px;
     border-color: purple; 
@@ -49,13 +48,22 @@ input {
 }
 
 .inside-wrapper {
-    width: 50%;
+    width: 100%;
     margin: auto;
+    display: flex;
+	text-align: right;
+    align-items: center;
+    justify-content: center;
+	padding-right: 1vw;
+}
+
+.button {
+	margin: auto;
 }
 
 .bar {
 	margin: 0;
-  	padding: 0;
+	border: 2px solid #eeeeee;
 	top: 0;
 	width: 100%;
 	text-align: center;
@@ -86,33 +94,30 @@ input {
 $if user_id:
     <div class="bar">
     	<div class="wrapper" id="wrapper1">
-            <div class="inside-wrapper">
-    		    <form method="post" action="next?user_id=$user_id&url=$url1">
-    		        <input type="submit" value="Page testée" />
-    		    </form>
-            </div>
     	</div>
         <div id="div-name">
-            $user_id
+            $names[int(user_id)-1].NAME
         </div>
     	<div class="wrapper" id="wrapper2">
             <div class="inside-wrapper">
-    		    <form method="post" action="emptyPage?user_id=$user_id&url=$url1">
-    		        <input type="submit" value="Page vide" />
-    		    </form>
-            </div>
-            <div class="inside-wrapper">
-                <form method="post" action="connectionError?user_id=$user_id&url=$url1">
-    		        <input type="submit" value="Connexion impossible" />
-    		    </form>
+        		<form method="post" action="next?user_id=$user_id&url1=$url1&url2=$url2">
+            	    <select name="select" style="font-weight: bold" class="button">  
+            	        <option value=""> Choisissez l'état du site </option>
+						$for statu in status:
+							$if statu:
+								$if statu != 'BUSY':
+								<option value="$statu"> $statu </option>
+            	    </select>
+        			<input class="button" type="submit" value="Envoyer" />
+        		</form>
             </div>
     	</div>
     </div>
 
-<center>
-	<div id="iframes">
+	<center>
+		<div id="iframes">
      		<iframe id="frame1" src="$url1" width="49.5%" height="95%" scrolling="yes" style="display:inline"></iframe>
      		<iframe id="frame2" src="$url2" width="49.5%" height="95%" scrolling="yes" style="display:inline"></iframe>
-	</div>   
-</center>
+		</div>   
+	</center>
 </body>
