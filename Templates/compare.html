@@ -11,6 +11,9 @@ form {
 body {
 	margin: 0px;
 	padding: 0px;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 input {
@@ -70,9 +73,45 @@ input {
     display: flex;
     justify-content: space-between;
 }
-.iframes {
+#iframes {
+    overflow-y: scroll;
 	padding:0px;
+    height: 100%;
 }
+.frame{
+    top:0px;
+    overflow-y:hidden;
+    overflow-x:auto;
+    width:49.5%;
+    display: inline-block
+}
+#frame1{
+    float:left;
+}
+.version-bar0{
+    width:100%;
+}
+.version-bar{
+    background-color: #555555; 
+    top:1px;
+    z-index:1000000;
+    display: inline-block;
+}
+.version-bar2{
+    width:49.5%;
+}
+.version-bar1{
+    float:left;
+    width:49.5%;
+}
+.version-bar0{
+    width:100%;
+}
+
+.version-link {padding-top : 0px; font-weight : 500; font-family : Arial; font-size : 15px; color : #ffffff;padding-left : 1em}
+.version-header {padding-top : 0px; font-weight : 500; font-family : Arial; font-size : 15px; color : #ffffff;padding-left : 1em}
+#versionNum {padding-top : 0px; font-weight : 500; font-family : Arial; font-size : 15px; color : #ffffff}
+#version-link {padding-top : 0px; font-weight : 500; font-family : Arial; font-size : 15px; color : #ffffff;padding-left : 1em}
 </style>
 <script>
  window.addEventListener("message", receiveMessage, false);
@@ -80,17 +119,29 @@ input {
  {
      frame1_window = document.getElementById('frame1').contentWindow;
      frame2_window = document.getElementById('frame2').contentWindow;
-
+    var height = event.data[0];
+    var url = event.data[1];
      if (event.source === frame1_window) {
-         frame2_window.postMessage(event.data, "*");
-     } else {
-         frame1_window.postMessage(event.data, "*");
+        console.log("message from 1")
+         document.getElementById('frame1').height = height+"px";
+         var link = document.getElementById('version-linkF1')
+         link.href= url;
+         link.textContent = url;
+     } else if(event.source === frame2_window) {
+        console.log("message from 2")
+         document.getElementById('frame2').height = height+"px";
+         var link = document.getElementById('version-linkF2')
+         link.href= url;
+         link.textContent = url;
      }
  }
 </script>
 </head>
 
 <body>
+</script>
+
+<div class="version-bar version-bar0"><p1 class="version-header" id="version-header0"></p1></div>
 $if user_id:
     <div class="bar">
     	<div class="wrapper" id="wrapper1">
@@ -113,11 +164,17 @@ $if user_id:
             </div>
     	</div>
     </div>
-
+<div class="version-bar version-bar1"><p1 class="version-header"><a id="versionNum"></a><a id="version-linkF1" class="version-link"></a></p1></div>
+<div class="version-bar version-bar2"><p1 class="version-header"><a id="versionNum"></a><a id="version-linkF2" class="version-link"></a></p1></div>
 	<center>
 		<div id="iframes">
-     		<iframe id="frame1" src="$url1" width="49.5%" height="95%" scrolling="yes" style="display:inline"></iframe>
-     		<iframe id="frame2" src="$url2" width="49.5%" height="95%" scrolling="yes" style="display:inline"></iframe>
+            <script>
+              function resizeIframe(obj) {
+                obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+              }
+            </script>
+     		<iframe id="frame1" class="frame" src="$url1" ></iframe>
+     		<iframe id="frame2" class="frame"  src="$url2" ></iframe>
 		</div>   
 	</center>
 </body>
