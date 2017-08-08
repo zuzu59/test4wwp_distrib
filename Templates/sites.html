@@ -1,0 +1,73 @@
+$def with (sites, users, status)
+
+<head>
+<title>Liste des sites</title>
+
+<style>
+table {
+	font-family: helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+th, tr {
+	border: 1px solid #dddddd;
+	position: relative;
+    text-align: left;
+    padding: 8px;
+	overflow:auto;
+}
+td {
+	border-right: 1px solid #dddddd;
+	border-left: 1px solid #dddddd;
+}
+tr:nth-child(odd) {
+	background:#eeeeee;
+}
+tbody {
+	overflow:auto;
+}
+
+</style>
+</head>
+<body>
+    <div id="table-wrapper">
+        <table>
+        	<thead>	
+        	    <tr>
+                    <th>JAHIA</th> 
+                    <th>WORDPRESS</th> 
+                    <th>STATUS</th> 
+                    <th>USER</th> 
+                    <th>DATE</th>
+                </tr>
+        	</thead>
+        	<tbody>
+        	$for site in sites:
+        		<tr>
+                    <td><a href="$site.JAHIA">$site.JAHIA</a></td> 
+        		    <td><a href="$site.WORDPRESS">$site.WORDPRESS </a></td>
+                    <td> 
+                        <select>
+                            <option value="$site.STATUS">$(site.STATUS if site.STATUS else "")</option>
+                            $for statu in status:
+                                $if statu != site.STATUS :
+                                    <option value="$statu">$(statu if statu else "")</option>
+                        </select>
+                    </td>
+
+                    <td> 
+                        <select>
+                            <option value="$site.USER_ID">$site.USER_ID -  $(users[int(site.USER_ID)-1].NAME if site.USER_ID else "")</option>
+                            $for user in users:
+                                $if user.ID != site.USER_ID:
+                                    <option value="$user.ID">$user.ID - $user.NAME</option>
+                        </select>
+                    </td>
+                    <td>$site.DATE</td>
+                </tr>
+        	</tbody>
+        </table>
+    </div>
+</body>

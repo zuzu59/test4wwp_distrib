@@ -1,0 +1,176 @@
+$def with (names, user_id, status, url1, url2)
+<head>
+<meta charset="UTF-8">
+<title> Comparateur de pages</title>
+
+<style>
+
+form {
+	margin:auto;
+	width:100%; }
+body {
+	margin: 0px;
+	padding: 0px;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+input {
+    font-style: italic;
+}
+
+.wrapper {
+	width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#wrapper1 {
+	background-color:#eeeeee;
+}
+
+#wrapper2 {
+	background-color:#eeeeee;
+
+}
+
+#div-name {
+	width: 25vw;
+    margin: auto;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-family: Helvetica;
+    font-size: 17px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: purple; 
+    background-color: pink;
+    color: red;
+}
+
+.inside-wrapper {
+    width: 100%;
+    margin: auto;
+    display: flex;
+	text-align: right;
+    align-items: center;
+    justify-content: center;
+	padding-right: 1vw;
+}
+
+.button {
+	margin: auto;
+}
+
+.bar {
+	margin: 0;
+	border: 2px solid #eeeeee;
+	top: 0;
+	width: 100%;
+	text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+#iframes {
+    overflow-y: scroll;
+    padding:0px;
+    height: 100%;
+}
+.frame{
+    top:0px;
+    overflow-y:hidden;
+    overflow-x:auto;
+    width:49.5%;
+    height: 100%;
+    display: inline-block
+}
+#frame1{
+    float:left;
+}
+.version-bar0{
+    width:100%;
+}
+.version-bar{
+    background-color: #555555; 
+    top:1px;
+    z-index:1000000;
+    display: inline-block;
+}
+.version-bar2{
+    width:49.5%;
+}
+.version-bar1{
+    float:left;
+    width:49.5%;
+}
+.version-bar0{
+    width:100%;
+}
+
+.version-link {padding-top : 0px; font-weight : 500; font-family : Arial; font-size : 15px; color : #ffffff;padding-left : 1em}
+.version-header {padding-top : 0px; font-weight : 500; font-family : Arial; font-size : 15px; color : #ffffff;padding-left : 1em}
+#versionNum {padding-top : 0px; font-weight : 500; font-family : Arial; font-size : 15px; color : #ffffff}
+#version-link {padding-top : 0px; font-weight : 500; font-family : Arial; font-size : 15px; color : #ffffff;padding-left : 1em}
+</style>
+<script>
+ window.addEventListener("message", receiveMessage, false);
+ function receiveMessage(event)
+ {
+     frame1_window = document.getElementById('frame1').contentWindow;
+     frame2_window = document.getElementById('frame2').contentWindow;
+    var height = event.data[0];
+    var url = event.data[1];
+     if (event.source === frame1_window) {
+        console.log("message from 1")
+         document.getElementById('frame1').style.height = height+"px";
+         var link = document.getElementById('version-linkF1')
+         link.href= url;
+         link.textContent = url;
+     } else if(event.source === frame2_window) {
+        console.log("message from 2")
+         document.getElementById('frame2').style.height = height+"px";
+         var link = document.getElementById('version-linkF2')
+         link.href= url;
+         link.textContent = url;
+     }
+ }
+</script>
+</head>
+
+<body>
+</script>
+
+<div class="version-bar version-bar0"><p1 class="version-header" id="version-header0"></p1></div>
+$if user_id:
+    <div class="bar">
+    	<div class="wrapper" id="wrapper1">
+    	</div>
+        <div id="div-name">
+            $names[int(user_id)-1].NAME
+        </div>
+    	<div class="wrapper" id="wrapper2">
+            <div class="inside-wrapper">
+        		<form method="post" action="next?user_id=$user_id&url1=$url1&url2=$url2">
+            	    <select name="select" style="font-weight: bold" class="button">  
+            	        <option value=""> Choisissez l'état du site </option>
+						$for statu in status:
+							$if statu:
+								$if statu != 'BUSY':
+								<option value="$statu"> $statu </option>
+            	    </select>
+        			<input class="button" type="submit" value="Envoyer" />
+        		</form>
+            </div>
+    	</div>
+    </div>
+<div class="version-bar version-bar1"><p1 class="version-header"><a id="versionNum"></a><a id="version-linkF1" class="version-link"></a></p1></div>
+<div class="version-bar version-bar2"><p1 class="version-header"><a id="versionNum"></a><a id="version-linkF2" class="version-link"></a></p1></div>
+	<center>
+		<div id="iframes">
+     		<iframe id="frame1" class="frame" src="$url1" ></iframe>
+     		<iframe id="frame2" class="frame"  src="$url2" ></iframe>
+		</div>   
+	</center>
+</body>
