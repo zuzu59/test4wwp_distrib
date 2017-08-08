@@ -70,12 +70,12 @@ input {
 	top: 0;
 	width: 100%;
 	text-align: center;
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 #iframes {
     overflow-y: scroll;
-	padding:0px;
+    padding:0px;
     height: 100%;
 }
 .frame{
@@ -83,6 +83,7 @@ input {
     overflow-y:hidden;
     overflow-x:auto;
     width:49.5%;
+    height: 100%;
     display: inline-block
 }
 #frame1{
@@ -123,13 +124,13 @@ input {
     var url = event.data[1];
      if (event.source === frame1_window) {
         console.log("message from 1")
-         document.getElementById('frame1').height = height+"px";
+         document.getElementById('frame1').style.height = height+"px";
          var link = document.getElementById('version-linkF1')
          link.href= url;
          link.textContent = url;
      } else if(event.source === frame2_window) {
         console.log("message from 2")
-         document.getElementById('frame2').height = height+"px";
+         document.getElementById('frame2').style.height = height+"px";
          var link = document.getElementById('version-linkF2')
          link.href= url;
          link.textContent = url;
@@ -168,11 +169,6 @@ $if user_id:
 <div class="version-bar version-bar2"><p1 class="version-header"><a id="versionNum"></a><a id="version-linkF2" class="version-link"></a></p1></div>
 	<center>
 		<div id="iframes">
-            <script>
-              function resizeIframe(obj) {
-                obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-              }
-            </script>
      		<iframe id="frame1" class="frame" src="$url1" ></iframe>
      		<iframe id="frame2" class="frame"  src="$url2" ></iframe>
 		</div>   
